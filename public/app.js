@@ -11,10 +11,10 @@ form.addEventListener("submit", async (e) => {
 
   result.classList.add("hidden");
 
-  const res = await fetch("/api/predict", {
+  const res = await fetch("http://127.0.0.1:8000/predict", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    body: JSON.stringify({ data })
   });
 
   const json = await res.json();

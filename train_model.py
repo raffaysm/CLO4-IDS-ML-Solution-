@@ -10,7 +10,8 @@ import joblib
 
 # 1) Load data
 df = pd.read_csv("dataset.csv", low_memory=False)
-
+df.columns = df.columns.str.strip()
+df.replace([np.inf, -np.inf], np.nan, inplace=True)
 # 2) Target column
 if "Label" not in df.columns:
     raise ValueError("Label column not found in dataset.csv")
@@ -21,7 +22,7 @@ df["label"] = df["Label"].apply(lambda x: 0 if str(x).upper() == "BENIGN" else 1
 # 4) Keep only numeric features (drop Label + non-numeric)
 X = df.drop(columns=["Label", "label"], errors="ignore")
 X = X.select_dtypes(include=[np.number])
-
+X.replace([np.inf, -np.inf], np.nan, inplace=True)
 y = df["label"]
 
 # 5) Train/test split

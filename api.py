@@ -1,9 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import joblib
 import pandas as pd
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or ["http://127.0.0.1:5500"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load model and feature list
 bundle = joblib.load("model.joblib")
@@ -15,7 +24,6 @@ class CICInput(BaseModel):
 
 @app.post("/predict")
 def predict(payload: CICInput):
-    # Ensure the input contains expected features
     row = {f: payload.data.get(f, None) for f in FEATURES}
     df = pd.DataFrame([row])
 

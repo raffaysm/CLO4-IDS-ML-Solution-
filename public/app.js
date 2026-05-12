@@ -1,26 +1,42 @@
-const form = document.getElementById("predict-form");
-const result = document.getElementById("result");
+const coreFeatures = [
+  "Destination Port",
+  "Flow Duration",
+  "Total Fwd Packets",
+  "Total Backward Packets",
+  "Total Length of Fwd Packets",
+  "Total Length of Bwd Packets",
+  "Fwd Packet Length Mean",
+  "Bwd Packet Length Mean",
+  "Flow Bytes/s",
+  "Flow Packets/s",
+  "Flow IAT Mean",
+  "Flow IAT Std",
+  "Packet Length Mean",
+  "Packet Length Std",
+  "Average Packet Size"
+];
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+const form = document.getElementById("form");
+coreFeatures.forEach(f => {
+  const div = document.createElement("div");
+  div.innerHTML = `<label>${f}</label><input type="number" id="${f}">`;
+  form.appendChild(div);
+});
 
+async function predict() {
   const data = {};
-  new FormData(form).forEach((value, key) => {
-    data[key] = Number(value);
+  coreFeatures.forEach(f => {
+    const val = document.getElementById(f).value;
+    data[f] = val === "" ? null : Number(val);
   });
-
-  result.classList.add("hidden");
 
   const res = await fetch("http://127.0.0.1:8000/predict", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ data })
   });
 
-  const json = await res.json();
-  result.innerHTML = `
-    <strong>Prediction:</strong> ${json.label}<br/>
-    <strong>Score:</strong> ${json.score}
-  `;
-  result.classList.remove("hidden");
-});
+  const out = await res.json();
+  document.getElementById("result").innerText =
+    `Label: ${out.label} | Score: ${out.score}`;
+}

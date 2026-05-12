@@ -1,111 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8" />
-  <title>CIC-IDS2017 Intrusion Detection</title>
+  <title>IDS Predictor</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="container">
-    <header>
-      <h1>Intrusion Detection System</h1>
-      <p>Enter flow features and get prediction</p>
-    </header>
+<header>
+  <h1>IDS Predictor</h1>
+  <p>Enter flow metrics and get a BENIGN/ATTACK prediction.</p>
+</header>
 
-    <form id="predict-form">
-      <div class="grid">
-        <label>
-          Destination Port
-          <input type="number" name="Destination Port" required />
-        </label>
+<div class="container">
+  <div class="card">
+    <div class="grid" id="form"></div>
+    <button onclick="predict()">Predict</button>
+    <div id="result"></div>
+  </div>
+</div>
 
-        <label>
-          Flow Duration
-          <input type="number" name="Flow Duration" required />
-        </label>
-
-        <label>
-          Total Fwd Packets
-          <input type="number" name="Total Fwd Packets" required />
-        </label>
-
-        <label>
-          Total Backward Packets
-          <input type="number" name="Total Backward Packets" required />
-        </label>
-
-        <label>
-          Total Length of Fwd Packets
-          <input type="number" name="Total Length of Fwd Packets" required />
-        </label>
-
-        <label>
-          Total Length of Bwd Packets
-          <input type="number" name="Total Length of Bwd Packets" required />
-        </label>
-
-        <label>
-          Fwd Packet Length Max
-          <input type="number" name="Fwd Packet Length Max" required />
-        </label>
-
-        <label>
-          Fwd Packet Length Min
-          <input type="number" name="Fwd Packet Length Min" required />
-        </label>
-
-        <label>
-          Fwd Packet Length Mean
-          <input type="number" name="Fwd Packet Length Mean" required />
-        </label>
-
-        <label>
-          Fwd Packet Length Std
-          <input type="number" name="Fwd Packet Length Std" required />
-        </label>
-
-        <label>
-          Protocol (6 TCP / 17 UDP / 1 ICMP)
-          <input type="number" name="Protocol" required />
-        </label>
-
-        <label>
-          Flow Bytes/s
-          <input type="number" name="Flow Bytes/s" required />
-        </label>
-
-        <label>
-          Flow Packets/s
-          <input type="number" name="Flow Packets/s" required />
-        </label>
-
-        <label>
-          Flow IAT Mean
-          <input type="number" name="Flow IAT Mean" required />
-        </label>
-
-        <label>
-          Flow IAT Std
-          <input type="number" name="Flow IAT Std" required />
-        </label>
-
-        <label>
-          Flow IAT Max
-          <input type="number" name="Flow IAT Max" required />
-        </label>
-
-        <label>
-          Flow IAT Min
-          <input type="number" name="Flow IAT Min" required />
-        </label>
-      </div>
-
-      <button type="submit">Predict</button>
-    </form>
-
-    <section id="result" class="result hidden"></section>
-  </main>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
